@@ -436,6 +436,63 @@
             color: rgba(139,92,246,0.3);
             line-height: 1;
         }
+        /* ===== Debug panel ===== */
+        .debug-panel {
+            position: fixed;
+            bottom: 70px;
+            left: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.9);
+            border: 1px solid rgba(139,92,246,0.3);
+            border-radius: 12px;
+            padding: 10px 14px;
+            z-index: 200;
+            font-size: 10px;
+            color: #aaa;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            font-family: monospace;
+        }
+        .debug-panel.visible { display: block; }
+        .debug-panel .debug-line { margin-bottom: 3px; word-break: break-all; }
+        .debug-panel .debug-line.ok { color: #34d399; }
+        .debug-panel .debug-line.warn { color: #fbbf24; }
+        .debug-panel .debug-line.err { color: #ef4444; }
+        .debug-panel .debug-line.info { color: #60a5fa; }
+        .debug-toggle {
+            position: fixed;
+            bottom: 64px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(139,92,246,0.2);
+            border: 1px solid rgba(139,92,246,0.4);
+            color: #c4b5fd;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 201;
+            cursor: pointer;
+        }
+        .debug-test-btn {
+            position: fixed;
+            bottom: 96px;
+            right: 8px;
+            padding: 3px 10px;
+            border-radius: 8px;
+            background: rgba(16,185,129,0.2);
+            border: 1px solid rgba(16,185,129,0.4);
+            color: #34d399;
+            font-size: 9px;
+            font-weight: 600;
+            z-index: 201;
+            cursor: pointer;
+            display: none;
+        }
+        .debug-test-btn.visible { display: block; }
     </style>
 </head>
 <body class="bg-[#09090b] text-white min-h-screen radio-bg overflow-hidden select-none">
@@ -507,7 +564,7 @@
                     </button>
                 </div>
                 <div class="text-center min-h-[36px] mb-2">
-                    <p class="text-white font-medium text-sm" id="nowPlaying">Pret a ecouter</p>
+                    <p class="text-white font-medium text-sm" id="nowPlaying">Prêt à écouter</p>
                     <p class="text-zinc-500 text-xs mt-0.5" id="nowPlayingSub">Appuyez sur play pour demarrer</p>
                 </div>
 
@@ -583,7 +640,7 @@
                     <img src="logo.jpg" alt="GNews Radio" class="w-full h-full object-cover">
                 </div>
                 <h3 class="font-display text-2xl font-bold bg-gradient-to-r from-violet-400 via-blue-400 to-pink-400 bg-clip-text text-transparent">GNews Radio</h3>
-                <p class="text-zinc-500 text-xs font-medium uppercase tracking-widest mt-1">Unite dans la Diversite</p>
+                <p class="text-zinc-500 text-xs font-medium uppercase tracking-widest mt-1">Unité dans la Diversité</p>
             </div>
 
             <!-- Description principale -->
@@ -593,10 +650,10 @@
                     Qui sommes-nous ?
                 </h4>
                 <p class="text-sm text-zinc-300 font-light leading-relaxed">
-                    GNews Radio est une webradio communautaire independante dediee a l'information, la culture et la spiritualite. Nee de la volonte de creer un pont entre les communautes, elle diffuse chaque soir de 19h a 22h (GMT+2) des programmes varies allant de l'actualite internationale aux debats de societe, en passant par la musique et les temoignages.
+                    GNews Radio est une webradio, née d'une initiative privée et dediée à l'information, la culture et la spiritualité. Née de la volonté de créer un pont entre les peuples, elle diffuse chaque soir de 19h a 22h (GMT+2) des programmes variés allant de l'actualité locale, nationale et internationale aux debats de société, en passant par la musique libre de droit, des podcasts, des moments de dévotions, des informations sur les activiés de la communauté bahá'ie et des annonces d'évènements futurs.
                 </p>
                 <p class="text-sm text-zinc-300 font-light leading-relaxed mt-3">
-                    Basee au Luxembourg, GNews Radio s'adresse a un public francophone soucieux de rester connecte aux enjeux du monde tout en cultivant des valeurs de tolerance, de respect mutuel et d'unite dans la diversite.
+                    Basée au Luxembourg, GNews Radio s'adresse à un public diversifié, francophone en premier lieu, arabophone, mais aussi ispanique portugais et soucieux de rester connecté aux enjeux du monde tout en cultivant des valeurs de tolérance, de respect mutuel et d'unité dans la diversité.
                 </p>
             </div>
 
@@ -607,7 +664,7 @@
                     Notre mission
                 </h4>
                 <p class="text-sm text-zinc-300 font-light leading-relaxed">
-                    GNews Radio a pour mission d'informer, d'eduquer et de rassembler. A travers ses emissions, elle vise a donner une voix aux sans-voix, a faire rayonner les initiatives positives et a favoriser le dialogue interculturel et interreligieux. La radio s'engage a offrir un espace d'expression libre et responsable, ou chaque voix compte et chaque perspective enrichit le debat.
+                    GNews Radio a pour mission d'informer, de partager des expériences sur l'éducation spirituelle et morale, mais aussi sur des thèmes touchant à la transformation sociale, à l'environnement, à l'économie, à la paix et de rassembler autour de ces valeurs. A travers ses émissions, elle vise à aussi donner une voix aux sans-voix, à faire rayonner les initiatives positives et constructives. et à favoriser le dialogue interculturel et interreligieux. La radio s'engage a offrir un espace d'expression libre et responsable, ou chaque voix compte et chaque perspective enrichit le débat.
                 </p>
             </div>
 
@@ -630,29 +687,29 @@
                         <div class="w-9 h-9 rounded-xl bg-violet-500/15 flex items-center justify-center mb-2.5">
                             <i data-lucide="users" class="w-4 h-4 text-violet-400"></i>
                         </div>
-                        <h5 class="text-xs font-bold text-white mb-1">Unite</h5>
-                        <p class="text-[11px] text-zinc-400 font-light leading-relaxed">Promouvoir la cohesion et la fraternite entre les peuples et les cultures.</p>
+                        <h5 class="text-xs font-bold text-white mb-1">Unité</h5>
+                        <p class="text-[11px] text-zinc-400 font-light leading-relaxed">Promouvoir la cohésion et la fraternité entre les peuples et les cultures.</p>
                     </div>
                     <div class="pillar-card">
                         <div class="w-9 h-9 rounded-xl bg-blue-500/15 flex items-center justify-center mb-2.5">
                             <i data-lucide="scale" class="w-4 h-4 text-blue-400"></i>
                         </div>
                         <h5 class="text-xs font-bold text-white mb-1">Justice</h5>
-                        <p class="text-[11px] text-zinc-400 font-light leading-relaxed">Defendre les droits humains et alerter sur les injustices dans le monde.</p>
+                        <p class="text-[11px] text-zinc-400 font-light leading-relaxed">Défendre les droits humains et alerter sur les injustices dans le monde.</p>
                     </div>
                     <div class="pillar-card">
                         <div class="w-9 h-9 rounded-xl bg-emerald-500/15 flex items-center justify-center mb-2.5">
                             <i data-lucide="book-open" class="w-4 h-4 text-emerald-400"></i>
                         </div>
                         <h5 class="text-xs font-bold text-white mb-1">Education</h5>
-                        <p class="text-[11px] text-zinc-400 font-light leading-relaxed">Contribuer a l'eveil des consciences et au developpement des capacites.</p>
+                        <p class="text-[11px] text-zinc-400 font-light leading-relaxed">Contribuer à l'éveil des consciences et au développement des capacités.</p>
                     </div>
                     <div class="pillar-card">
                         <div class="w-9 h-9 rounded-xl bg-pink-500/15 flex items-center justify-center mb-2.5">
                             <i data-lucide="handshake" class="w-4 h-4 text-pink-400"></i>
                         </div>
                         <h5 class="text-xs font-bold text-white mb-1">Dialogue</h5>
-                        <p class="text-[11px] text-zinc-400 font-light leading-relaxed">Favoriser les echanges constructifs entre les traditions et les cultures.</p>
+                        <p class="text-[11px] text-zinc-400 font-light leading-relaxed">Favoriser les échanges constructifs entre les traditions et les cultures.</p>
                     </div>
                 </div>
             </div>
@@ -666,15 +723,15 @@
                 <ul class="space-y-2.5">
                     <li class="flex items-start gap-2.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-1.5 shrink-0"></span>
-                        <span class="text-sm text-zinc-300 font-light leading-relaxed"><strong class="text-white font-medium">Flash infos</strong> -- L'actualite internationale et nationale analysee avec rigueur et impartialite.</span>
+                        <span class="text-sm text-zinc-300 font-light leading-relaxed"><strong class="text-white font-medium">Flash infos</strong> -- L'actualité internationale et nationale analysée avec rigueur et impartialité.</span>
                     </li>
                     <li class="flex items-start gap-2.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 shrink-0"></span>
-                        <span class="text-sm text-zinc-300 font-light leading-relaxed"><strong class="text-white font-medium">Debats et reflexions</strong> -- Des discussions approfondies sur les enjeux de societe, la spiritualite et le vivre-ensemble.</span>
+                        <span class="text-sm text-zinc-300 font-light leading-relaxed"><strong class="text-white font-medium">Débats et reflexions</strong> -- Des discussions approfondies sur les enjeux de société, la spiritualité et le vivre-ensemble.</span>
                     </li>
                     <li class="flex items-start gap-2.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-pink-400 mt-1.5 shrink-0"></span>
-                        <span class="text-sm text-zinc-300 font-light leading-relaxed"><strong class="text-white font-medium">Musique et culture</strong> -- Une selection musicale variee et des decouvertes culturelles du monde entier.</span>
+                        <span class="text-sm text-zinc-300 font-light leading-relaxed"><strong class="text-white font-medium">Musique et culture</strong> -- Une sélection musicale variée et des decouvertes culturelles du monde entier.</span>
                     </li>
                     <li class="flex items-start gap-2.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
@@ -682,7 +739,7 @@
                     </li>
                     <li class="flex items-start gap-2.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-1.5 shrink-0"></span>
-                        <span class="text-sm text-zinc-300 font-light leading-relaxed"><strong class="text-white font-medium">Annonces communautaires</strong> -- Informations sur les evenements locaux, nationaux et internationaux.</span>
+                        <span class="text-sm text-zinc-300 font-light leading-relaxed"><strong class="text-white font-medium">Annonces communautaires</strong> -- Informations sur les évènements locaux, nationaux et internationaux.</span>
                     </li>
                 </ul>
             </div>
@@ -716,7 +773,7 @@
             <!-- Lien contact -->
             <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 text-center">
                 <i data-lucide="message-circle" class="w-8 h-8 text-violet-400 mx-auto mb-3"></i>
-                <p class="text-sm text-zinc-400 font-light">Vous souhaitez en savoir plus, collaborer ou partager une idee ?</p>
+                <p class="text-sm text-zinc-400 font-light">Vous souhaitez en savoir plus, collaborer ou partager une idée ?</p>
                 <button onclick="closePage(); setTimeout(()=>openPage('contacts'), 300)" class="mt-3 text-sm font-semibold text-violet-400 active:text-violet-300 transition-colors">Contactez-nous -></button>
             </div>
 
@@ -740,28 +797,28 @@
             <article class="expandable-card bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 transition-colors" onclick="toggleExpand(this)">
                 <div class="flex items-center gap-2 mb-3">
                     <span class="text-[10px] font-bold uppercase tracking-widest text-violet-400 bg-violet-500/10 px-2.5 py-1 rounded-full">Flash Infos</span>
-                    <span class="text-[11px] text-zinc-500">Aujourd'hui</span>
+                    <span class="text-[11px] text-zinc-500">""</span>
                     <div class="ml-auto"><i data-lucide="chevron-down" class="w-4 h-4 text-zinc-500 expand-chevron"></i></div>
                 </div>
-                <h3 class="font-semibold text-white mb-2 leading-snug">Persecution continue des baha'is en Iran</h3>
+                <h3 class="font-semibold text-white mb-2 leading-snug">Persécution continue des baha'is en Iran</h3>
                 <p class="card-preview text-sm text-zinc-400 font-light leading-relaxed">Des nouvelles alarmantes du BWNews.</p>
                 <div class="expand-content">
                     <div class="border-t border-white/[0.06] pt-3">
-                        <p class="text-sm text-zinc-300 font-light leading-relaxed">Des nouvelles alarmantes continuent d'affluer concernant la persecution systematique des baha'is en Iran. Malgre les appels internationaux pour le respect des droits humains, les autorites iraniennes persistent dans leurs politiques de discrimination et de repression a l'encontre de la communaute baha'ie. Des arrestations arbitraires, la confiscation de biens, l'interdiction d'acces a l'education superieure et la destruction de lieux de culte continuent d'etre documentees par des organisations de defense des droits humains.</p>
+                        <p class="text-sm text-zinc-300 font-light leading-relaxed">Des nouvelles alarmantes continuent d'affluer concernant la persécution systematique des baha'is en Iran. Malgré les appels internationaux pour le respect des droits humains, les autorités iraniennes persistent dans leurs politiques de discrimination et de repression à l'encontre de la communaute baha'ie. Des arrestations arbitraires, la confiscation de biens, l'interdiction d'accès à l'éducation superieure et la destruction de lieux de culte continuent d'être documentées par des organisations de défense des droits humains.</p>
                     </div>
                 </div>
             </article>
             <article class="expandable-card bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 transition-colors" onclick="toggleExpand(this)">
                 <div class="flex items-center gap-2 mb-3">
                     <span class="text-[10px] font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full">Communaute</span>
-                    <span class="text-[11px] text-zinc-500">Il y a une semaine</span>
+                    <span class="text-[11px] text-zinc-500">""</span>
                     <div class="ml-auto"><i data-lucide="chevron-down" class="w-4 h-4 text-zinc-500 expand-chevron"></i></div>
                 </div>
                 <h3 class="font-semibold text-white mb-2 leading-snug">Demarrage de la 2e phase du plan de 9 ans</h3>
                 <p class="card-preview text-sm text-zinc-400 font-light leading-relaxed">La construction communautaire et le partage du Message</p>
                 <div class="expand-content">
                     <div class="border-t border-white/[0.06] pt-3">
-                        <p class="text-sm text-zinc-300 font-light leading-relaxed">La Maison universelle de justice a annonce le lancement de la deuxieme phase du plan de neuf ans, une etape cruciale qui vise a intensifier les efforts de construction communautaire a travers le monde.</p>
+                        <p class="text-sm text-zinc-300 font-light leading-relaxed">La Maison universelle de justice a annoncé le lancement de la deuxieme phase du plan de neuf ans, une étape cruciale qui vise à intensifier les efforts de construction communautaire à travers le monde.</p>
                     </div>
                 </div>
             </article>
@@ -771,11 +828,11 @@
                     <span class="text-[11px] text-zinc-500">En 2026</span>
                     <div class="ml-auto"><i data-lucide="chevron-down" class="w-4 h-4 text-zinc-500 expand-chevron"></i></div>
                 </div>
-                <h3 class="font-semibold text-white mb-2 leading-snug">Fete de Ridvan au centre baha'i a Luxembourg-ville</h3>
-                <p class="card-preview text-sm text-zinc-400 font-light leading-relaxed">Commemoration en presence du Conseiller</p>
+                <h3 class="font-semibold text-white mb-2 leading-snug">Fête de Ridvan au centre bahá'i à Luxembourg-ville</h3>
+                <p class="card-preview text-sm text-zinc-400 font-light leading-relaxed">Commémoration en presence du Conseiller Continental</p>
                 <div class="expand-content">
                     <div class="border-t border-white/[0.06] pt-3">
-                        <p class="text-sm text-zinc-300 font-light leading-relaxed">La communaute baha'ie du Luxembourg a celebre la Fete de Ridvan au centre baha'i de Luxembourg-ville, en presence du Conseiller du Continent europeen.</p>
+                        <p class="text-sm text-zinc-300 font-light leading-relaxed">La communaute bahá'ie du Luxembourg a célébre la Fête de Ridvan au centre bahá'i de Luxembourg-ville, en presence du Conseiller du Continent européen.</p>
                     </div>
                 </div>
             </article>
@@ -785,11 +842,11 @@
                     <span class="text-[11px] text-zinc-500">En 2026</span>
                     <div class="ml-auto"><i data-lucide="chevron-down" class="w-4 h-4 text-zinc-500 expand-chevron"></i></div>
                 </div>
-                <h3 class="font-semibold text-white mb-2 leading-snug">Les derniers developpements economiques impactent les marches mondiaux</h3>
-                <p class="card-preview text-sm text-zinc-400 font-light leading-relaxed">Decouvrez la selection d'evenements culturels a ne pas manquer.</p>
+                <h3 class="font-semibold text-white mb-2 leading-snug">Les derniers développements économiques impactent les marches mondiaux</h3>
+                <p class="card-preview text-sm text-zinc-400 font-light leading-relaxed">Découvrez la selection d'évènements culturels à ne pas manquer.</p>
                 <div class="expand-content">
                     <div class="border-t border-white/[0.06] pt-3">
-                        <p class="text-sm text-zinc-300 font-light leading-relaxed">Les recents bouleversements economiques continuent d'affecter les marches financiers mondiaux, avec des repercussions sur les taux de change, les matieres premieres et les investissements internationaux.</p>
+                        <p class="text-sm text-zinc-300 font-light leading-relaxed">Les récents bouleversements économiques continuent d'affecter les marches financiers mondiaux, avec des répercussions sur les taux de change, les matières premières et les investissements internationaux.</p>
                     </div>
                 </div>
             </article>
@@ -820,11 +877,11 @@
                             <span class="text-[10px] font-bold uppercase tracking-widest text-blue-400">Niveau International</span>
                             <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-500 expand-chevron shrink-0 ml-auto"></i>
                         </div>
-                        <h3 class="font-semibold text-white mt-1 mb-1">Persecutions</h3>
+                        <h3 class="font-semibold text-white mt-1 mb-1">Persécutions</h3>
                         <p class="card-preview text-sm text-zinc-400 font-light leading-relaxed">Iran</p>
                         <div class="expand-content">
                             <div class="border-t border-white/[0.06] pt-3 mt-2">
-                                <p class="text-sm text-zinc-300 font-light leading-relaxed">La persecution des baha'is en Iran se poursuit de maniere alarmante.</p>
+                                <p class="text-sm text-zinc-300 font-light leading-relaxed">La persécution des bahá'is en Iran se poursuit de manière alarmante.</p>
                                 <span class="inline-block mt-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500 bg-white/5 px-2.5 py-1 rounded-full">Selon BWNS</span>
                             </div>
                         </div>
@@ -841,11 +898,11 @@
                             <span class="text-[10px] font-bold uppercase tracking-widest text-pink-400">Niveau National</span>
                             <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-500 expand-chevron shrink-0 ml-auto"></i>
                         </div>
-                        <h3 class="font-semibold text-white mt-1 mb-1">Lancement 2e phase du plan de 9 ans</h3>
+                        <h3 class="font-semibold text-white mt-1 mb-1">Lancement de la 2e phase du plan de 9 ans</h3>
                         <p class="card-preview text-sm text-zinc-400 font-light leading-relaxed">Convention nationale.</p>
                         <div class="expand-content">
                             <div class="border-t border-white/[0.06] pt-3 mt-2">
-                                <p class="text-sm text-zinc-300 font-light leading-relaxed">La convention nationale a marque le lancement officiel de la deuxieme phase du plan de neuf ans.</p>
+                                <p class="text-sm text-zinc-300 font-light leading-relaxed">La convention nationale a marqué le lancement officiel de la deuxieme phase du plan de neuf ans.</p>
                                 <span class="inline-block mt-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500 bg-white/5 px-2.5 py-1 rounded-full">Samedi-dimanche 2-3 mai</span>
                             </div>
                         </div>
@@ -863,11 +920,11 @@
                             <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-500 expand-chevron shrink-0 ml-auto"></i>
                         </div>
                         <h3 class="font-semibold text-white mt-1 mb-1">Formation des capacites</h3>
-                        <p class="card-preview text-sm text-zinc-400 font-light leading-relaxed">Institut baha'i.</p>
+                        <p class="card-preview text-sm text-zinc-400 font-light leading-relaxed">Institut bahá'i.</p>
                         <div class="expand-content">
                             <div class="border-t border-white/[0.06] pt-3 mt-2">
-                                <p class="text-sm text-zinc-300 font-light leading-relaxed">L'Institut baha'i propose un programme de formation des capacites ouvert a tous.</p>
-                                <span class="inline-block mt-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500 bg-white/5 px-2.5 py-1 rounded-full">Contactez le centre baha'i</span>
+                                <p class="text-sm text-zinc-300 font-light leading-relaxed">L'Institut bahá'i propose un programme de formation des capacités ouvert à tous.</p>
+                                <span class="inline-block mt-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500 bg-white/5 px-2.5 py-1 rounded-full">Contactez le centre bahá'i</span>
                             </div>
                         </div>
                     </div>
@@ -900,7 +957,7 @@
                     <i data-lucide="phone" class="w-5 h-5 text-emerald-400"></i>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">Telephone</p>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">Téléphone</p>
                     <p class="text-white font-medium mt-0.5">+352 621 690 272</p>
                 </div>
                 <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-600 shrink-0"></i>
@@ -926,7 +983,7 @@
                     <a href="https://www.religare.org/" class="flex items-center gap-3 py-2.5 px-3 rounded-xl hover:bg-white/[0.04] active:bg-white/[0.06] active:scale-[0.98] transition-all">
                         <i data-lucide="book-open" class="w-4 h-4 text-violet-400 shrink-0"></i>
                         <div class="flex-1 min-w-0">
-                            <p class="text-white font-medium text-sm">Ecrits Sacres</p>
+                            <p class="text-white font-medium text-sm">Ecrits Sacrés</p>
                             <p class="text-zinc-500 text-[11px]">religare.org</p>
                         </div>
                         <i data-lucide="external-link" class="w-3.5 h-3.5 text-zinc-600 shrink-0"></i>
@@ -934,7 +991,7 @@
                     <a href="https://www.bahai.lu/" class="flex items-center gap-3 py-2.5 px-3 rounded-xl hover:bg-white/[0.04] active:bg-white/[0.06] active:scale-[0.98] transition-all">
                         <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400 shrink-0"></i>
                         <div class="flex-1 min-w-0">
-                            <p class="text-white font-medium text-sm">Baha'is du Luxembourg</p>
+                            <p class="text-white font-medium text-sm">Bahá'is du Luxembourg</p>
                             <p class="text-zinc-500 text-[11px]">bahai.lu</p>
                         </div>
                         <i data-lucide="external-link" class="w-3.5 h-3.5 text-zinc-600 shrink-0"></i>
@@ -942,7 +999,7 @@
                     <a href="https://www.bahai.org/" class="flex items-center gap-3 py-2.5 px-3 rounded-xl hover:bg-white/[0.04] active:bg-white/[0.06] active:scale-[0.98] transition-all">
                         <i data-lucide="globe" class="w-4 h-4 text-blue-400 shrink-0"></i>
                         <div class="flex-1 min-w-0">
-                            <p class="text-white font-medium text-sm">Communaute mondiale</p>
+                            <p class="text-white font-medium text-sm">Communauté mondiale</p>
                             <p class="text-zinc-500 text-[11px]">bahai.org</p>
                         </div>
                         <i data-lucide="external-link" class="w-3.5 h-3.5 text-zinc-600 shrink-0"></i>
@@ -984,6 +1041,11 @@
         </div>
     </div>
 
+    <!-- ===== Debug panel ===== -->
+    <div class="debug-panel" id="debugPanel"></div>
+    <button class="debug-toggle" id="debugToggle" onclick="toggleDebug()">?</button>
+    <button class="debug-test-btn" id="debugTestBtn" onclick="testCategoryParsing()">TEST</button>
+
     <audio id="radioAudio" preload="none"></audio>
 
     <script>
@@ -1001,8 +1063,10 @@
         //   - crossorigin.me (connexion refusee)
         // ================================================================
         const CORS_PROXIES = [
-            "https://api.codetabs.com/v1/proxy/?quest=",   // Fiable, gere les flux binaires
-            "https://api.allorigins.win/raw?url="           // Fiable, requiert URL encodee
+            "https://api.codetabs.com/v1/proxy/?quest=",
+            "https://api.allorigins.win/raw?url=",
+            "https://corsproxy.io/?",
+            "https://api.cors.lol/?url="
         ];
 
         // Proxy JSON AllOrigins - retourne {contents, status} en JSON
@@ -1027,6 +1091,59 @@
         let previousVolume = 80;
         let isConnecting = false;
         const audio = document.getElementById('radioAudio');
+
+        // ===== Debug visuel =====
+        let debugVisible = false;
+        const debugLines = [];
+        const MAX_DEBUG_LINES = 50;
+
+        function debugLog(msg, type) {
+            type = type || 'info';
+            const line = { msg: msg, type: type, time: new Date().toLocaleTimeString() };
+            debugLines.push(line);
+            if (debugLines.length > MAX_DEBUG_LINES) debugLines.shift();
+            renderDebug();
+            console.log('[Debug][' + type + '] ' + msg);
+        }
+
+        function renderDebug() {
+            const panel = document.getElementById('debugPanel');
+            if (!panel || !debugVisible) return;
+            panel.innerHTML = debugLines.map(l =>
+                '<div class="debug-line ' + l.type + '">' + l.time + ' ' + l.msg + '</div>'
+            ).join('');
+            panel.scrollTop = panel.scrollHeight;
+        }
+
+        function toggleDebug() {
+            debugVisible = !debugVisible;
+            const panel = document.getElementById('debugPanel');
+            const testBtn = document.getElementById('debugTestBtn');
+            if (panel) panel.classList.toggle('visible', debugVisible);
+            if (testBtn) testBtn.classList.toggle('visible', debugVisible);
+            if (debugVisible) renderDebug();
+        }
+
+        function testCategoryParsing() {
+            const testTitles = [
+                'PODCAST: Bâtir-une-société-nouvelle',
+                'NEWS: Flash info du jour',
+                'JINGLE: station-id',
+                'PUB: Annonce partenaire',
+                'CITATION: Verset du jour',
+                'MUSIQUE: Artist - Song',
+                'PODCAST - Autre émission',
+                'Artiste - Titre sans catégorie'
+            ];
+            debugLog('=== TEST CATEGORY PARSING ===', 'info');
+            for (const t of testTitles) {
+                const result = parseCategory(t);
+                debugLog('"' + t + '" → ' + result.category + ' / "' + result.displayTitle + '"', 'ok');
+            }
+            // Also test with the current extraction flow
+            debugLog('Force updateSongTitle avec "PODCAST: Bâtir-une-société-nouvelle"', 'warn');
+            updateSongTitle('PODCAST: Bâtir-une-société-nouvelle');
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
@@ -1082,8 +1199,8 @@
             }
             if (lower === 'gnews radio') return false;
             if (text.length > 200) return false;
-            // Titre qui ne contient QUE des points d'interrogation et espaces (encodage rate total)
-            if (/^[\s?]+$/.test(text)) return false;
+            // Only reject if title is ENTIRELY punctuation/question marks/spaces (no letters at all)
+            if (!/[a-zA-ZÀ-ÿ]/.test(text)) return false;
             return true;
         }
 
@@ -1188,6 +1305,7 @@
                         }
 
                         console.log('[Categorie] Detecte: ' + catKey + ' | Titre brut: "' + trimmed + '" | Titre affiche: "' + displayTitle + '"');
+                        debugLog('Catégorie: ' + catKey + ' → ' + displayTitle, 'ok');
 
                         return { category: catKey, displayTitle: displayTitle };
                     }
@@ -1196,6 +1314,7 @@
 
             // Aucun prefix de categorie detecte → categorie par defaut : musique
             console.log('[Categorie] Non detecte (defaut: music) | Titre: "' + trimmed + '"');
+            debugLog('Catégorie: défaut (music) | ' + trimmed, 'warn');
             return { category: 'music', displayTitle: rawTitle };
         }
 
@@ -1250,6 +1369,7 @@
                     if (statusEl) statusEl.textContent = '';
                 } else {
                     el.textContent = isPlaying ? 'En attente du titre...' : '--';
+                    debugLog('Aucun titre valide - affichage par défaut', 'warn');
                     el.classList.remove('scrolling');
                     el.style.transform = '';
                     if (container) container.classList.remove('has-overflow');
@@ -1291,6 +1411,7 @@
                 updateCategoryBadge(parsed.category);
 
                 el.textContent = cleanedTitle;
+                debugLog('Affichage: [' + parsed.category + '] ' + cleanedTitle, 'ok');
                 el.classList.remove('scrolling');
                 el.style.transform = '';
                 if (container) container.classList.remove('has-overflow');
@@ -1380,7 +1501,12 @@
                             title = fixMojibake(title);
                             title = sanitizeTitle(title);
                             console.log('[ICY] Titre extrait:', title);
+                            debugLog('ICY extrait: ' + title, 'info');
                             if (isValidTitle(title)) return title;
+                            // Titre extrait mais rejeté par isValidTitle - on le retourne quand même
+                            // car parseCategory() peut encore détecter la catégorie
+                            console.warn('[ICY] Titre rejeté par isValidTitle mais conservé:', title);
+                            return title;
                         }
                     }
 
@@ -1393,7 +1519,12 @@
                         title = fixMojibake(title);
                         title = sanitizeTitle(title);
                         console.log('[ICY] Titre extrait (final):', title);
+                        debugLog('ICY extrait (final): ' + title, 'info');
                         if (isValidTitle(title)) return title;
+                        // Titre extrait mais rejeté par isValidTitle - on le retourne quand même
+                        // car parseCategory() peut encore détecter la catégorie
+                        console.warn('[ICY] Titre rejeté par isValidTitle mais conservé:', title);
+                        return title;
                     }
                 } else {
                     // Fallback : lire la reponse entiere (si pas de ReadableStream)
@@ -1404,7 +1535,12 @@
                         title = fixMojibake(title);
                         title = sanitizeTitle(title);
                         console.log('[ICY] Titre extrait (fallback):', title);
+                        debugLog('ICY extrait (fallback): ' + title, 'info');
                         if (isValidTitle(title)) return title;
+                        // Titre extrait mais rejeté par isValidTitle - on le retourne quand même
+                        // car parseCategory() peut encore détecter la catégorie
+                        console.warn('[ICY] Titre rejeté par isValidTitle mais conservé:', title);
+                        return title;
                     }
                 }
             } catch (e) {
@@ -1506,6 +1642,8 @@
                         title = sanitizeTitle(title);
                         console.log('[AllOrigins] Titre extrait:', title);
                         if (isValidTitle(title)) return title;
+                        console.warn('[AllOrigins] Titre rejeté par isValidTitle mais conservé:', title);
+                        return title;
                     }
                 }
             } catch (e) {}
@@ -1735,6 +1873,7 @@
             // ETAPE 1 : Extraction ICY depuis le flux audio via proxy
             // ============================================================
             console.log('[Meta] Tentative ICY stream via proxy...');
+            debugLog('Tentative ICY stream...', 'info');
 
             for (const proxy of CORS_PROXIES) {
                 if (songTitle) break;
@@ -1742,6 +1881,7 @@
                 if (songTitle) {
                     usedMethod = 'ICY/' + proxy.split('/')[2];
                     console.log('[Meta] ICY OK via', proxy.split('/')[2], ':', songTitle);
+                    debugLog('ICY OK: ' + songTitle, 'ok');
                 }
             }
 
@@ -1750,10 +1890,12 @@
             // ============================================================
             if (!songTitle) {
                 console.log('[Meta] ICY echoue, tentative AllOrigins JSON...');
+                debugLog('ICY échoué, tentative AllOrigins...', 'warn');
                 songTitle = await fetchTitleViaAllOriginsJSON(STREAM_URL);
                 if (songTitle) {
                     usedMethod = 'AllOrigins-JSON';
                     console.log('[Meta] AllOrigins JSON OK :', songTitle);
+                    debugLog('AllOrigins OK: ' + songTitle, 'ok');
                 }
             }
 
@@ -1762,6 +1904,7 @@
             // ============================================================
             if (!songTitle) {
                 console.log('[Meta] Tentative endpoints HTTP Shoutcast...');
+                debugLog('Tentative HTTP Shoutcast...', 'info');
                 const endpoints = ['/currentsong', '/7.html', '/played.html'];
                 let rawResponse = '';
 
@@ -1801,6 +1944,7 @@
                 const isNew = songTitle !== lastKnownTitle;
                 if (isNew) {
                     console.log('[Metadata] NOUVEAU titre :', songTitle, '(via ' + usedMethod + ')');
+                    debugLog('NOUVEAU titre: ' + songTitle + ' (' + usedMethod + ')', 'ok');
                 } else {
                     console.log('[Metadata] Meme titre :', songTitle);
                 }
@@ -1813,6 +1957,7 @@
             } else {
                 consecutiveFailures++;
                 console.log('[Metadata] Tentative', metadataFetchCount, '- echec #' + consecutiveFailures);
+                debugLog('Échec #' + consecutiveFailures + ' (tentative ' + metadataFetchCount + ')', 'err');
 
                 if (lastKnownTitle) {
                     if (statusEl) statusEl.textContent = '';
