@@ -1,6 +1,6 @@
 {
     "name": "GNews Radio",
-    "short_name": "GNews",
+    "short_name": "GNews Radio",
     "description": "GNews Radio — Votre radio de 19h à 22h (GMT+2). Unité dans la Diversité.",
     "start_url": "/",
     "display": "standalone",
